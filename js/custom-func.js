@@ -42,3 +42,13 @@ function mobileCheck() {
     })(navigator.userAgent || navigator.vendor || window.opera);
     return check;
 };
+
+function changeLinks(oldLink, newLink) {
+        let elements = document.getElementsByTagName('a');
+        for (const element of elements) {
+            if (element.href === oldLink){
+                console.log("element: ", element);
+                element.href = newLink;
+            }
+        }
+    }
