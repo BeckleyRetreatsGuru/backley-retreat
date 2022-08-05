@@ -1,0 +1,79 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>TestFormGIP</title>
+    <link href="https://beckleyretreatsguru.github.io/backley-retreat/css/form.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<!-- Change or deletion of the name attributes in the input tag will lead to empty values on record submission-->
+<div class="zf-templateWidth" id="loadFrom"></div>
+<!-- 'zf-templateWidth' ends -->
+
+<!-- For Geo Data  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://beckleyretreatsguru.github.io/backley-retreat/js/validation.js"></script>
+<script src="https://beckleyretreatsguru.github.io/backley-retreat/js/custom-func.js"></script>
+
+<script>
+    $('body').addClass('zf-backgroundBg');
+
+    const getGeoData = ()=>{
+        $.get("https://ipinfo.io?token=eb601a91986a65", function() {}, "jsonp").always(function(resp) {
+            console.log("resp: ", resp)
+            window.country = (resp && resp.country) ? resp.country : 'US'
+            $('#G_City').val((resp && resp.city) ? resp.city : null)
+            $('#G_Country').val((resp && resp.country) ? resp.country : null)
+            $('#G_Hostname').val((resp && resp.hostname) ? resp.hostname : null)
+            $('#G_Ip').val((resp && resp.ip) ? resp.ip : null)
+            $('#G_Location').val((resp && resp.loc) ? resp.loc : null)
+            $('#G_Org').val((resp && resp.org) ? resp.org : null)
+            $('#G_Postal').val((resp && resp.postal) ? resp.postal : null)
+            $('#G_Region').val((resp && resp.region) ? resp.region : null)
+            $('#G_Timezone').val((resp && resp.timezone) ? resp.timezone : null)
+        });
+    }
+
+    const utmData = ()=>{
+        let params = getSearchParameters();
+        console.log("params: ", params);
+
+        if (params.hasOwnProperty('channel')) {
+            $('#channel').val(params.channel);
+        }
+        if (params.hasOwnProperty('channeldrilldown1')) {
+            $('#channeldrilldown1').val(params.channeldrilldown1);
+        }
+        if (params.hasOwnProperty('channeldrilldown2')) {
+            $('#channeldrilldown2').val(params.channeldrilldown2);
+        }
+        if (params.hasOwnProperty('channeldrilldown3')) {
+            $('#channeldrilldown3').val(params.channeldrilldown3);
+        }
+        if (params.hasOwnProperty('landingpage')) {
+            $('#landingpage').val(params.landingpage);
+        }
+        if (params.hasOwnProperty('landingpagegroup')) {
+            $('#landingpagegroup').val(params.landingpagegroup);
+        }
+    };
+
+    window.onload = async() => {
+        // getGeoData();
+        utmData();
+        console.log("onload");
+    }
+</script>
+<!-- For Geo Data  -->
+
+<script type="text/javascript">
+    var zf_DateRegex = new RegExp("^(([0][1-9])|([1-2][0-9])|([3][0-1]))[-](Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[-](?:(?:19|20)[0-9]{2})$");
+    var zf_MandArray = [];
+    var zf_FieldArray = ["Name_First", "Name_Last", "Email", "SingleLine8", "SingleLine3", "SingleLine7", "SingleLine6", "SingleLine5", "SingleLine4", "SingleLine2", "SingleLine1", "SingleLine", "SingleLine13", "SingleLine9", "SingleLine12", "SingleLine14", "SingleLine11", "SingleLine10"];
+    var isSalesIQIntegrationEnabled = false;
+    var salesIQFieldsArray = [];
+</script>
+</body>
+
+</html>
