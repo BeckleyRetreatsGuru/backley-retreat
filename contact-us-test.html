@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>TestFormGIP</title>
+    <!-- Zoho Form styles  -->
     <link href="https://beckleyretreatsguru.github.io/backley-retreat/css/form.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -11,7 +12,7 @@
 <div class="zf-templateWidth" id="loadFrom"></div>
 <!-- 'zf-templateWidth' ends -->
 
-<!-- For Geo Data  -->
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://beckleyretreatsguru.github.io/backley-retreat/js/validation.js"></script>
 <script src="https://beckleyretreatsguru.github.io/backley-retreat/js/custom-func.js"></script>
@@ -19,8 +20,9 @@
 <script>
     $('body').addClass('zf-backgroundBg');
 
-    const getGeoData = ()=>{
-        $.get("https://ipinfo.io?token=eb601a91986a65", function() {}, "jsonp").always(function(resp) {
+    const getGeoData = () => {
+        $.get("https://ipinfo.io?token=eb601a91986a65", function () {
+        }, "jsonp").always(function (resp) {
             console.log("resp: ", resp)
             window.country = (resp && resp.country) ? resp.country : 'US'
             $('#G_City').val((resp && resp.city) ? resp.city : null)
@@ -35,7 +37,7 @@
         });
     }
 
-    const utmData = ()=>{
+    const utmData = () => {
         let params = getSearchParameters();
         console.log("params: ", params);
 
@@ -59,9 +61,24 @@
         }
     };
 
-    window.onload = async() => {
-        // getGeoData();
-        utmData();
+
+    const getZohoForm = () => {
+        fetch('https://beckleyretreatsguru.github.io/backley-retreat/template/form-test.html')
+            .then(response => response.text())
+            .then((data) => {
+                let outputForm = document.querySelector("#loadFrom");
+                outputForm.innerHTML = data
+                console.log("Load Form")
+            })
+            .then(() => {
+                getGeoData();
+                utmData();
+            })
+    }
+
+
+    window.onload = async () => {
+        getZohoForm();
         console.log("onload");
     }
 </script>
